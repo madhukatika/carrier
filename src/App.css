@@ -36,3 +36,30 @@
     transform: rotate(360deg);
   }
 }
+.search-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+
+}
+
+.search-bar input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.search-bar button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background-color: #0069d9;
+}
