@@ -1,142 +1,162 @@
-import {useState} from 'react'
-import allFiles from '../json_data/merged_file.json';
+// import {useState} from 'react'
+// import allFiles from '../json_data/merged_file.json';
 
 
 
-const Search_data = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+// const Search_data = () => {
+//   const [searchTerm, setSearchTerm] = useState('');
  
 
-  const handleInputChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
+//   const handleInputChange = (e) => {
+//     setSearchTerm(e.target.value);
+//   };
 
-  const handleFormSubmit = async(e) => {
-    e.preventDefault();
+//   const handleFormSubmit = async(e) => {
+//     e.preventDefault();
 
   
     
-    console.log(allFiles)
-    console.log('Search term:', searchTerm);
-    setSearchTerm('');
+//     console.log(allFiles)
+//     console.log('Search term:', searchTerm);
+//     setSearchTerm('');
+//   };
+
+
+      
+//   return (
+//     <div>
+//     <form className="search-bar" onSubmit={handleFormSubmit}>
+//       <input
+//         type="text"
+//         placeholder="Search"
+//         value={searchTerm}
+//         onChange={handleInputChange}
+//       />
+//       <button type="submit">Search</button>
+//     </form>
+   
+//     </div>
+//   );
+//   }
+// export default Search_data;
+
+import React, { useState, useEffect } from 'react';
+import mergeData from '../../json_data/merged_file.json';
+
+const SearchComponent = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+
+
+  useEffect(() => {
+    // Perform initial search on component mount
+    performSearch(searchTerm);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value;
+    setSearchTerm(searchTerm);
+    performSearch(searchTerm);
   };
 
+  const performSearch = (term) => {
+    // Perform search on the imported JSON data
+    const results = mergeData.filter((item) => {
+      if(item.hasOwnProperty("thermostatPacket")){
+        console.log('hello')
+        const itemString = JSON.stringify(item).toLowerCase();
+        return itemString.includes(term.toLowerCase());
+}
+    });
+    console.log(results)
+    setSearchResults(results);
+  };
 
-      
   return (
     <div>
-    <form className="search-bar" onSubmit={handleFormSubmit}>
       <input
         type="text"
-        placeholder="Search"
+        placeholder="Search..."
         value={searchTerm}
-        onChange={handleInputChange}
+        onChange={handleSearch}
       />
-      <button type="submit">Search</button>
-    </form>
-   
+      <table>
+        <tr>
+      <th>Date
+        </th>
+      <th>Time
+        </th>
+      <th>product
+        </th>
+      <th>version
+        </th>
+      <th>id
+        </th>
+      <th>hvacMode
+        </th>
+      <th>deadband10xF
+        </th>
+      <th>outdoorTempLockout10xF
+        </th>
+      <th>programMode
+        </th>
+      <th>fanMode
+        </th>
+      <th>numHeatStages
+        </th>
+        <th>numCompressorStages
+        </th>
+      <th>numHeatStages
+        </th>
+      <th>hasHeatpump
+        </th>
+        <th>smartSensorCnt
+        </th>
+      <th>outdoorTemperature10xF
+        </th>
+      <th>indoorTemperature10xF
+        </th>
+      <th>outdoorHumidityPer
+        </th>
+      <th>indoorHumidityPer
+        </th>
+        </tr>
+        {searchResults.map((item,index) => (
+                // <div key={index}>{JSON.stringify(item.thermostatPacket)}</div>
+          <tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+
+          </tr>
+
+          
+
+          
+
+
+         ) )}
+         </table>
+
     </div>
   );
-  }
-export default Search_data;
+};
+
+export default SearchComponent;
 
 
-// import { useState } from 'react';
-// import allFiles from '../json_data/merged_file.json';
 
-// const Search_data = () => {
-//   const [searchTerm, setSearchTerm] = useState('');
-//   const [filteredData, setFilteredData] = useState([]);
 
-//   const handleInputChange = (e) => {
-//     setSearchTerm(e.target.value);
-//   };
-
-//   const handleFormSubmit = (e) => {
-//     e.preventDefault();
-
-//     const filteredFiles = allFiles.map((file) => {
-//       if (file && file.name && searchTerm) {
-//         return file.name.toLowerCase().includes(searchTerm.toLowerCase());
-//       }
-//       return;
-//     });
-//     console.log("all  n ",filteredFiles)
-//     setFilteredData(filteredFiles);
-//     setSearchTerm('');
-//   };
-// console.log('datv : ', filteredData[0])
-//   return (
-//     <div>
-//       <form className="search-bar" onSubmit={handleFormSubmit}>
-//         <input
-//           type="text"
-//           placeholder="Search"
-//           value={searchTerm}
-//           onChange={handleInputChange}
-//         />
-//         <button type="submit">Search</button>
-//       </form>
-      
-//       {filteredData.length > 0 ? (
-//         <ul>
-//           {allFiles.map((file) => (
-//             <li key={file.uid}>{file.plcPacket}</li>
-//           ))}
-//         </ul>
-//       ) : (
-//         <p>No results found.</p>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Search_data;
-// import { useState } from 'react';
-// import allFiles from '../json_data/merged_file.json';
-
-// const Search_data = () => {
-//   const [searchTerm, setSearchTerm] = useState('');
-//   const [searchResult, setSearchResult] = useState(null);
-
-//   const handleInputChange = (e) => {
-//     setSearchTerm(e.target.value);
-//   };
-
-//   const handleFormSubmit = async (e) => {
-//     e.preventDefault();
-//     console.log('Search term:', searchTerm);
-
-//     // Find the first item with a matching key
-//     const foundItem = allFiles.find((item) => item.hasOwnProperty(searchTerm));
-
-//     setSearchResult(foundItem ? foundItem[searchTerm] : null);
-//     setSearchTerm('');
-//   };
-
-//   return (
-//     <div>
-//       <form className="search-bar" onSubmit={handleFormSubmit}>
-//         <input
-//           type="text"
-//           placeholder="Search"
-//           value={searchTerm}
-//           onChange={handleInputChange}
-//         />
-//         <button type="submit">Search</button>
-//       </form>
-
-//       {searchResult !== null ? (
-//         <div>
-//           <h2>Search Result:</h2>
-//           <p>{searchResult}</p>
-//         </div>
-//       ) : (
-//         <p>No result found.</p>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Search_data;
 
